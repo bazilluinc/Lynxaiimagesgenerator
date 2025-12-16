@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 const Header: React.FC = () => {
   return (
@@ -15,12 +15,6 @@ const Header: React.FC = () => {
           </h1>
         </div>
         
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
-          <a href="#" className="hover:text-lynx-400 transition-colors">Gallery</a>
-          <a href="#" className="hover:text-lynx-400 transition-colors">Models</a>
-          <a href="#" className="hover:text-lynx-400 transition-colors">About</a>
-        </div>
-
         <div className="flex items-center gap-3">
              <div className="px-3 py-1 rounded-full bg-lynx-500/10 border border-lynx-500/20 text-lynx-400 text-xs font-mono">
                 v1.0.0

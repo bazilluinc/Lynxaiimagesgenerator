@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings2, Zap, Diamond, Monitor, Smartphone, Square, LayoutTemplate } from 'lucide-react';
+import { Zap, Diamond, Monitor, Smartphone, Square, LayoutTemplate } from 'lucide-react';
 import { GenerationSettings, ModelType, AspectRatio, ImageSize } from '../types';
 import { ASPECT_RATIOS, MODEL_OPTIONS } from '../constants';
 
@@ -7,9 +7,10 @@ interface ControlPanelProps {
   settings: GenerationSettings;
   onSettingsChange: (newSettings: GenerationSettings) => void;
   disabled: boolean;
+  className?: string;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ settings, onSettingsChange, disabled }) => {
+const ControlPanel: React.FC<ControlPanelProps> = ({ settings, onSettingsChange, disabled, className = "" }) => {
   
   const handleModelChange = (model: ModelType) => {
     onSettingsChange({ ...settings, model });
@@ -35,12 +36,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ settings, onSettingsChange,
   };
 
   return (
-    <div className="bg-obsidian-900 border border-white/5 rounded-2xl p-5 space-y-6 h-fit">
-      <div className="flex items-center gap-2 text-slate-100 font-semibold border-b border-white/5 pb-4">
-        <Settings2 className="w-5 h-5 text-lynx-500" />
-        <h2>Configuration</h2>
-      </div>
-
+    <div className={`space-y-6 ${className}`}>
       {/* Model Selection */}
       <div className="space-y-3">
         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Model</label>
@@ -73,7 +69,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ settings, onSettingsChange,
       {/* Aspect Ratio */}
       <div className="space-y-3">
         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Aspect Ratio</label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
           {ASPECT_RATIOS.map((ratio) => (
             <button
               key={ratio.value}
