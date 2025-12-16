@@ -9,12 +9,14 @@ const getClient = async (isPro: boolean) => {
     const aiStudio = window.aistudio as any;
     const hasKey = await aiStudio.hasSelectedApiKey();
     if (!hasKey) {
+        // We await the dialog. Even if the user cancels or it returns false, 
+        // strict adherence to the "race condition" rule suggests we proceed 
+        // hoping the env var is set or will be set. 
         try {
-            const success = await aiStudio.openSelectKey();
-            if (!success) throw new Error("API Key selection failed or cancelled.");
+            await aiStudio.openSelectKey();
         } catch (e) {
-            console.error("Key selection error", e);
-            throw new Error("You must select a paid API key to use Lynx Pro.");
+            console.warn("Key selection dialog issue:", e);
+            // Proceed anyway to attempt generation with current env
         }
     }
   }
@@ -73,11 +75,20 @@ export const generateImage = async (
 
   } catch (error: any) {
     console.error("Gemini Generation Error:", error);
-    // Handle specific error for key not found if possible, but generic is fine
+    
     let msg = error.message || "Failed to generate image.";
-    if (msg.includes("Requested entity was not found")) {
-        msg = "API Key error. Please try selecting your key again.";
+    
+    // Handle specific error for key not found or permission issues
+    if (msg.includes("Requested entity was not found") || msg.includes("403") || msg.includes("404")) {
+        // If we are in the special environment, try to prompt for key again if likely a key issue
+        if (settings.model === ModelType.PRO && window.aistudio) {
+             msg = "API Key authorization failed. Please ensure you selected a valid paid project and try again.";
+             // We don't force open here to avoid loops, let the user click generate again which triggers getClient -> openSelectKey if needed
+             // But if hasSelectedApiKey is true but invalid, we might need to force it.
+             // For now, relies on user retrying.
+        }
     }
+    
     throw new Error(msg);
   }
 };
