@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import ControlPanel from './components/ControlPanel';
 import Gallery from './components/Gallery';
-import { GenerationSettings, GeneratedImage, GenerationState, ModelType, AspectRatio, ImageSize } from './types';
+import { GenerationSettings, GeneratedImage, GenerationState, AspectRatio } from './types';
 import { DEFAULT_SETTINGS } from './constants';
 import { generateImage } from './services/geminiService';
 import { Wand2, Loader2, AlertCircle, ChevronDown, ChevronUp, History } from 'lucide-react';
@@ -168,29 +168,4 @@ const App: React.FC = () => {
                 </div>
               )}
               
-             <div className="text-xs text-center text-slate-600 mt-8">
-                  Powered by Gemini 3.0 Pro & 2.5 Flash
-             </div>
-
-          </div>
-        </main>
-      </div>
-
-      {/* Right Sidebar - History/Gallery */}
-      <aside className="w-80 border-l border-white/5 bg-obsidian-900/50 hidden md:flex flex-col">
-         <div className="p-4 border-b border-white/5 flex items-center gap-2">
-            <History className="w-4 h-4 text-lynx-500" />
-            <h2 className="font-semibold text-slate-200">Recent Creations</h2>
-            <span className="ml-auto text-xs bg-white/5 px-2 py-0.5 rounded-full text-slate-400">
-                {generatedImages.length}
-            </span>
-         </div>
-         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-            <Gallery images={generatedImages} onDelete={handleDelete} />
-         </div>
-      </aside>
-    </div>
-  );
-};
-
-export default App;
+             <div className="text-xs

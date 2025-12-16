@@ -1,6 +1,5 @@
 export enum ModelType {
   FLASH = 'gemini-2.5-flash-image',
-  PRO = 'gemini-3-pro-image-preview',
 }
 
 export enum AspectRatio {
@@ -11,16 +10,9 @@ export enum AspectRatio {
   TALL = '9:16',
 }
 
-export enum ImageSize {
-  SIZE_1K = '1K',
-  SIZE_2K = '2K',
-  SIZE_4K = '4K',
-}
-
 export interface GenerationSettings {
   model: ModelType;
   aspectRatio: AspectRatio;
-  imageSize: ImageSize;
   numberOfImages: number;
 }
 

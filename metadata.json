@@ -1,5 +1,5 @@
 {
-  "name": "Lynx - AI Image Generator",
+  "name": "Lynx Vision",
   "description": "A high-performance AI image generation tool powered by Google's Gemini models. Create stunning visuals with text prompts using Flash and Pro models.",
   "requestFramePermissions": []
 }
