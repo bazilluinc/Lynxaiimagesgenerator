@@ -71,6 +71,11 @@ const App: React.FC = () => {
     setGenerationState(prev => ({ ...prev, error: null }));
   };
 
+  const handleSettingsChange = (newSettings: GenerationSettings) => {
+    setSettings(newSettings);
+    setShowSettings(false);
+  };
+
   return (
     <div className="flex h-screen bg-obsidian-950 text-slate-100 font-sans selection:bg-lynx-500/30 overflow-hidden">
       
@@ -144,7 +149,7 @@ const App: React.FC = () => {
                   <div className="mt-2 p-5 bg-obsidian-900/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl animate-in slide-in-from-top-2 fade-in duration-200">
                       <ControlPanel 
                           settings={settings} 
-                          onSettingsChange={setSettings} 
+                          onSettingsChange={handleSettingsChange} 
                           disabled={generationState.isGenerating}
                       />
                   </div>
@@ -168,4 +173,29 @@ const App: React.FC = () => {
                 </div>
               )}
               
-             <div className="text-xs
+             <div className="text-xs text-center text-slate-600 mt-8">
+                  Powered by Gemini 2.5 Flash
+             </div>
+
+          </div>
+        </main>
+      </div>
+
+      {/* Right Sidebar - History/Gallery */}
+      <aside className="w-80 border-l border-white/5 bg-obsidian-900/50 hidden md:flex flex-col">
+         <div className="p-4 border-b border-white/5 flex items-center gap-2">
+            <History className="w-4 h-4 text-lynx-500" />
+            <h2 className="font-semibold text-slate-200">Recent Creations</h2>
+            <span className="ml-auto text-xs bg-white/5 px-2 py-0.5 rounded-full text-slate-400">
+                {generatedImages.length}
+            </span>
+         </div>
+         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+            <Gallery images={generatedImages} onDelete={handleDelete} />
+         </div>
+      </aside>
+    </div>
+  );
+};
+
+export default App;
